@@ -1,24 +1,35 @@
 <template>
   <div
-    class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition duration-300 border"
+    class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-200 p-5 sm:p-6 cursor-pointer"
   >
-    <h2 class="text-xl font-semibold text-blue-700 mb-2">{{ post.title }}</h2>
-    <p class="text-gray-700 mb-4 line-clamp-3">{{ post.body }}</p>
+    <slot :post="post">
+      <div class="flex justify-between items-center text-sm text-gray-500 mb-2">
+        <span
+          >🆔 <strong class="text-gray-700">ID: {{ post.id }}</strong></span
+        >
+        <span>👤 Author: User #{{ post.userId }}</span>
+      </div>
 
-    <div class="flex flex-wrap gap-2 mb-3">
-      <span
-        v-for="tag in post.tags"
-        :key="tag"
-        class="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded"
-      >
-        #{{ tag }}
-      </span>
-    </div>
-
-    <div class="text-sm text-gray-500 flex justify-between">
-      <span>👁️ {{ post.views }} views</span>
-      <span>❤️ {{ (post.reactions as any).likes || 0 }} likes</span>
-    </div>
+      <h2 class="text-lg sm:text-xl font-semibold text-blue-800 mb-2">
+        {{ post.title }}
+      </h2>
+      <p class="text-gray-700 text-sm sm:text-base mb-4 line-clamp-3">
+        {{ post.body }}
+      </p>
+      <div class="flex flex-wrap gap-2 mb-3">
+        <span
+          v-for="tag in post.tags"
+          :key="tag"
+          class="bg-blue-50 text-blue-700 text-xs sm:text-sm font-medium px-3 py-1 rounded-full border border-blue-200"
+        >
+          #{{ tag }}
+        </span>
+      </div>
+      <div class="text-sm text-gray-500 flex justify-between items-center">
+        <span>👁️ {{ post.views }} views</span>
+        <span>❤️ {{ (post.reactions as any).likes || 0 }} likes</span>
+      </div>
+    </slot>
   </div>
 </template>
 

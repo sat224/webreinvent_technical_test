@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 import { usePostStore } from "../stores/post";
 import PostCard from "../components/PostCard.vue";
 import { useRouter } from "vue-router";
@@ -31,40 +31,44 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="main">
-    <button
-      @click="router.push('/')"
-      class="text-blue-600 mb-6 hover:underline"
-    >
-      Home
-    </button>
-  </div>
-  <div class="max-w-2xl mx-auto flex flex-col gap-6 px-4">
-    <PostCard
-      v-for="post in store.posts"
-      :post="post"
-      :key="post.id"
-      @click="goToPost(post.id)"
-    />
-  </div>
-  <div v-if="store.loading" class="text-center py-8">
-    <div class="flex justify-center items-center">
+  <div class="min-h-screen bg-gradient-to-b from-white to-gray-100 pb-16">
+    <header class="bg-white shadow-md sticky top-0 z-10">
       <div
-        class="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"
-      ></div>
+        class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <h1 class="text-2xl font-bold text-gray-800">📚 All Posts</h1>
+        <button
+          @click="router.push('/')"
+          class="text-blue-600 font-medium hover:underline transition"
+        >
+          Home
+        </button>
+      </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 mt-8 space-y-6">
+      <PostCard
+        v-for="post in store.posts"
+        :post="post"
+        :key="post.id"
+        @click="goToPost(post.id)"
+      />
+    </main>
+
+    <div v-if="store.loading" class="text-center py-12">
+      <div class="flex justify-center items-center">
+        <div
+          class="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"
+        ></div>
+      </div>
+      <p class="mt-4 text-sm text-gray-500">Loading more posts...</p>
+    </div>
+
+    <div
+      v-if="!store.hasMore && store.posts.length"
+      class="text-center text-gray-500 mt-10 text-sm"
+    >
+      🎉 You've reached the end!
     </div>
   </div>
-
-  <div
-    v-if="!store.hasMore && store.posts.length"
-    class="text-center text-gray-500 py-6"
-  >
-    No more posts to load.
-  </div>
 </template>
-
-<style scoped>
-.main {
-  padding: 2rem;
-}
-</style>
