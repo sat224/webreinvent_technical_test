@@ -8,6 +8,7 @@ const router = useRouter();
 const store = usePostStore();
 
 const goToPost = (id: number) => {
+  sessionStorage.setItem("scrollY", window.scrollY.toString());
   router.push(`/post/${id}`);
 };
 
