@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <RouterLink to="/posts">Go to Posts</RouterLink>
     <h1 class="text-2xl font-bold">Welcome to the Home Page</h1>
+    <RouterLink to="/posts">
+      <button class="text-blue-600 mb-6 hover:underline">Posts</button>
+    </RouterLink>
   </div>
 </template>
 

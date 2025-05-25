@@ -24,8 +24,16 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
+  const getPostById = async (id: string) => {
+    const res = await fetch(`https://dummyjson.com/posts/${id}`);
+    if (!res.ok) throw new Error("Post not found");
+    const post = await res.json();
+    return post;
+  };
+
   return {
-    fetchAllPosts,
     posts,
+    fetchAllPosts,
+    getPostById,
   };
 });
